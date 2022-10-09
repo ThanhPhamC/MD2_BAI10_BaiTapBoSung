@@ -269,15 +269,8 @@ public class Student implements IStudentManagement {
 
     @Override
     public void displayData() {
-        System.out.println(
-                "studentId='" + studentId + '\'' +
-                        "| studentName='" + studentName + '\'' +
-                        "| age=" + age +
-                        "| sex=" + sex +
-                        "| studentClass=" + studentClass.getClassName() +
-                        "| avgMark=" + avgMark +
-                        "| gPA='" + gPA +
-                        "| studentStatus='" + studentStatus + '\''
-        );
+        System.out.printf("|    %-10s|  %-17s|   %-6s|   %-7s |  %-7s|       %-12s|  %-7s|  %-8s  |\n", studentId, studentName, age, sex,studentClass.getClassName(), avgMark, gPA, studentStatus);
+        System.out.println("+-------------------------------------------------------------------------------------------------------------+");
+
     }
 }

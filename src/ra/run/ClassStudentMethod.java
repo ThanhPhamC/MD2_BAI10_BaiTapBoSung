@@ -69,16 +69,25 @@ public class ClassStudentMethod {
         }
     }
 
-    //--------- Hiển thị thông tin sinh viên-------------
+    //--------- Hiển thị thông tin lop hoc-------------
     public static void showListClass() {
+        System.out.printf("Hiện tại có %d lớp học: \n",listStudsentClass.size());
+        System.out.println("+--------------------------------------------------------------------+");
+        System.out.printf("%-16s%-20s%-20s%-10s\n", "|   Mã lớp học", "|    Tên lớp học", "|      Mô tả", "| Trạng thái |");
+        System.out.println("+--------------------------------------------------------------------+");
+
         for (StudentClass x : listStudsentClass) {
             x.displayData();
         }
+
     }
 
     //------- thong ke lop hoc dang hoat dong------------------
     public static void showClassOn() {
         int count=0;
+        System.out.println("+--------------------------------------------------------------------+");
+        System.out.printf("%-16s%-20s%-20s%-10s\n", "|   Mã lớp học", "|    Tên lớp học", "|      Mô tả", "| Trạng thái |");
+        System.out.println("+--------------------------------------------------------------------+");
         for (StudentClass aClass : listStudsentClass) {
             if (aClass.getClassStatus() == 2) {
                 aClass.displayData();
@@ -92,6 +101,9 @@ public class ClassStudentMethod {
     public static void searchClass() {
         System.out.println("Nhập tên class cần tìm: ");
         String inputName = sc.nextLine();
+        System.out.println("+--------------------------------------------------------------------+");
+        System.out.printf("%-16s%-20s%-20s%-10s\n", "|   Mã lớp học", "|    Tên lớp học", "|      Mô tả", "| Trạng thái |");
+        System.out.println("+--------------------------------------------------------------------+");
         for (StudentClass aClass : listStudsentClass) {
             if (aClass.getClassName().equals(inputName)) {
                 aClass.displayData();

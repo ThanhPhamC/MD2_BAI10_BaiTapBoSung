@@ -116,11 +116,9 @@ public class StudentClass implements IStudentManagement {
 
     @Override
     public void displayData() {
-        System.out.println(
-                "ClassId='" + classId + '\'' +
-                "| className='" + className + '\'' +
-                "| descriptions='" + descriptions + '\'' +
-                "| classStatus=" + classStatus);
+        System.out.printf("|   %-12s|     %-14s|     %-14s|     %-7s|\n", classId, className, descriptions, classStatus);
+        System.out.println("+--------------------------------------------------------------------+");
+
     }
 
 }
