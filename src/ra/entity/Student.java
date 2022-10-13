@@ -3,6 +3,7 @@ package ra.entity;
 import ra.run.ClassStudentMethod;
 import ra.run.StudendMethod;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -132,26 +133,35 @@ public class Student implements IStudentManagement {
     public void inputData() {
         Scanner sc = new Scanner(System.in);
         System.out.print("Nhập mã sinh viên: ");                                        //.nhap ma sinh vien.
-        this.studentId = sc.nextLine();
-        while (this.studentId.trim().length() != 6 || this.studentId.charAt(0) != 'S') {
-            System.out.println("ID gồm 6 kí tự và bắt đầu bằng \"S\": ");
-            this.studentId = sc.nextLine();
-        }
-        if (StudendMethod.listStudent.size() != 0) {
-            boolean checkout = true;
-            while (checkout) {
-                for (Student student : StudendMethod.listStudent) {
-                    if (student.getStudentId().equals(this.studentId.trim()) || this.studentId.trim().length() != 6 || this.studentId.trim().charAt(0) != 'S') {
-                        System.out.println("Độ dài Id= 6, bắt đầu bằng \"S\" và không được trùng hoặc trống, nhập lại: ");
-                        this.studentId = sc.nextLine();
-                        break;
-                    } else {
-                        checkout = false;
-                    }
-                }
-            }
 
-        }
+        do {
+            this.studentId = sc.nextLine();
+            if (this.studentId.trim().length() != 0) {
+                if (this.studentId.trim().length() == 6) {
+                    if (this.studentId.trim().charAt(0) == 'S') {
+                        boolean check = true;
+                        for (Student student : StudendMethod.listStudent) {
+                            if (student.getStudentId().equals(this.studentId.trim())) {
+                                check = false;
+                                break;
+                            }
+                        }
+                        if (check) {
+                            break;
+                        } else {
+                            System.out.println("Id đã tồn tại, nhập Id mới: ");
+                        }
+                    } else {
+                        System.out.println("Id phải bắt đầu là kí tự 'S', nhập lại: ");
+                    }
+                } else {
+                    System.out.println("Id phải là 6 kí tự, nhập lại: ");
+                }
+
+            } else {
+                System.out.println("Không được để trống, nhập lại: ");
+            }
+        } while (true);
         while (true) {                                                               //.nhap ten sinh vien.
             System.out.print("Nhập tên sinh viên: ");
             this.studentName = sc.nextLine();
@@ -165,7 +175,8 @@ public class Student implements IStudentManagement {
             boolean checkout = true;
             while (checkout) {
                 for (Student student : StudendMethod.listStudent) {
-                    if (student.getStudentName().equals(this.studentName.trim()) || this.studentName.trim().length() < 10 || this.studentName.trim().length() > 50) {
+                    if (student.getStudentName().equals(this.studentName.trim()) || this.studentName.trim().length() < 10
+                            || this.studentName.trim().length() > 50) {
                         System.out.println("Tên gồm 10-50 kí tự và không để trống, nhập lại: ");
                         this.studentName = sc.nextLine();
                         break;
@@ -176,7 +187,7 @@ public class Student implements IStudentManagement {
             }
         }
         System.out.print("Nhập tuổi sinh viên: ");                                    // nhap tuoi.
-           this.age= inputAge(sc);
+        this.age = inputAge(sc);
         while (true) {                                                               //.nhap gioi tinh.
             try {
                 System.out.print("Nhập giới tính sinh viên: ");
@@ -204,10 +215,10 @@ public class Student implements IStudentManagement {
     }
 
     //------- input AGE-------------
-    public static int inputAge( Scanner sc) {
+    public static int inputAge(Scanner sc) {
         while (true) {
             try {
-               int age = Integer.parseInt(sc.nextLine());
+                int age = Integer.parseInt(sc.nextLine());
                 if (age < 18) {
                     System.out.println("Sai tuổi, hãy nhập lại!");
                 } else {
@@ -221,7 +232,7 @@ public class Student implements IStudentManagement {
 
     //    ------- diem 3 mon----------
     public static void inputMark(List<Float> listMark, Scanner sc) {
-        int count = 1;
+        int count = listMark.size() + 1;
         float mark;
         do {
             while (true) {
@@ -269,8 +280,32 @@ public class Student implements IStudentManagement {
 
     @Override
     public void displayData() {
-        System.out.printf("|    %-10s|  %-17s|   %-6s|   %-7s |  %-7s|       %-12s|  %-7s|  %-8s  |\n", studentId, studentName, age, sex,studentClass.getClassName(), avgMark, gPA, studentStatus);
-        System.out.println("+-------------------------------------------------------------------------------------------------------------+");
+        if (this.sex) {
+            System.out.printf("|    %-10s|  %-17s|   %-6s|    Nam    |  %-7s|       %-12s|  %-7s|  %-8s  |\n",
+                    studentId, studentName, age, studentClass.getClassName(), avgMark, gPA, studentStatus);
+            System.out.println("+-------------------------------------------------------------------------------------------------------------+");
+            System.out.print("Điểm JavaScript: ");
+            for (Float jsmark : listMarkJavaScript) {
+                System.out.printf("%s\t", jsmark);
+            }
+            System.out.printf("\n");
+
+            System.out.print("Điểm JavaCore  : ");
+            for (Float jcmark : listMarkJavaCore) {
+                System.out.printf("%s\t" + jcmark);
+            }
+            System.out.printf("\n");
+            System.out.print("Điểm JavaWeb   : ");
+            for (Float jwmark : listMarkJavaWeb) {
+                System.out.printf("%s\t", jwmark);
+            }
+            System.out.printf("\n");
+        } else {
+            System.out.printf("|    %-10s|  %-17s|   %-6s|    Nam    |  %-7s|       %-12s|  %-7s|  %-8s  |\n",
+                    studentId, studentName, age, studentClass.getClassName(), avgMark, gPA, studentStatus);
+            System.out.println("+-------------------------------------------------------------------------------------------------------------+");
+        }
+
 
     }
 }

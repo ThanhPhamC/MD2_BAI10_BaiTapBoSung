@@ -58,53 +58,62 @@ public class StudentClass implements IStudentManagement {
     public void inputData() {
         Scanner sc = new Scanner(System.in);
         System.out.print("Nhập Id: ");
-        this.classId = sc.nextLine();
-        while (this.classId.trim().length() != 5 || this.classId.charAt(0) != 'J') {
-            System.out.print("ID gồm 5 kí tự và bắt đầu bằng \"J\": ");
+        do {
             this.classId = sc.nextLine();
-        }
-        if (ClassStudentMethod.listStudsentClass.size() != 0) {
-            boolean checkout = true;
-            while (checkout) {
-                for (StudentClass xclass : ClassStudentMethod.listStudsentClass) {
-                    if (xclass.getClassId().equals(this.classId.trim()) || this.classId.trim().length() != 5 || this.classId.trim().charAt(0) != 'J') {
-                        System.out.print("Độ dài Id=5 bắt đầu bằng \"J\" và không được trùng hoặc trống, nhập lại: ");
-                        this.classId = sc.nextLine();
-                        break;
+            if (this.classId.trim().length() != 0) {
+                if (this.classId.trim().length() == 5) {
+                    if (this.classId.trim().charAt(0) == 'J') {
+                        boolean check = true;
+                        for (StudentClass classstudent : ClassStudentMethod.listStudsentClass) {
+                            if (classstudent.classId.equals(this.classId.trim())) {
+                                check = false;
+                            }
+                        }
+                        if (!check) {
+                            System.out.println("Id đã bị trùng");
+                        } else {
+                            break;
+                        }
                     } else {
-                        checkout = false;
+                        System.out.println("Id phải bắt đầu là kí tự 'J'.");
                     }
+                } else {
+                    System.out.println("Id phải là 5 kí tự.");
                 }
+            } else {
+                System.out.println("Không để trống.");
             }
-
-        }
+        } while (true);
         System.out.print("Nhập tên lớp: ");
-        this.className = sc.nextLine();
-        while (this.className.trim().length() == 0 || this.className.trim().length() > 10) {
-            System.out.print("Nhập lại tên với độ dài <10: ");
+        do {
             this.className = sc.nextLine();
-        }
-        if (ClassStudentMethod.listStudsentClass.size() != 0) {
-            boolean checkout = true;
-            while (checkout) {
-                for (StudentClass xclass : ClassStudentMethod.listStudsentClass) {
-                    if (xclass.getClassName().equals(this.className.trim()) || this.className.trim().length() == 0 || this.className.trim().length() > 10) {
-                        System.out.print("Độ dài tên <10 và không được trùng hoặc trống, nhập lại: ");
-                        this.className = sc.nextLine();
-                        break;
-                    } else {
-                        checkout = false;
+            if (this.className.trim().length()!=0){
+                if (this.className.trim().length()<10){
+                    boolean check = true;
+                    for (StudentClass classstudent : ClassStudentMethod.listStudsentClass) {
+                        if (classstudent.className.equals(this.className.trim())) {
+                            check = false;
+                        }
                     }
+                    if (!check) {
+                        System.out.println("Tên đã bị trùng");
+                    } else {
+                        break;
+                    }
+                }else {
+                    System.out.println("Do dai ten duoi 10 ki tu");
                 }
+            }else {
+                System.out.println("khong de trong");
             }
-        }
+        } while (true);
         System.out.print("Mô tả: ");
         this.descriptions = sc.nextLine();
         System.out.println("Trạng thái lớp:");
         System.out.println("1. Sắp bắt đầu.");
         System.out.println("2. Hoạt động.");
         System.out.println("3. Tạm dừng.");
-        while (this.classStatus<1||this.classStatus >3) {
+        while (this.classStatus < 1 || this.classStatus > 3) {
             try {
                 System.out.print("Vui lòng chọn trong khoảng 1 - 3: ");
                 this.classStatus = Integer.parseInt(sc.nextLine());
@@ -120,5 +129,4 @@ public class StudentClass implements IStudentManagement {
         System.out.println("+--------------------------------------------------------------------+");
 
     }
-
 }

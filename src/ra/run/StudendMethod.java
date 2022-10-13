@@ -16,102 +16,164 @@ public class StudendMethod implements Comparator<Student> {
     public static void addNewStudent() {
         if (ClassStudentMethod.listStudsentClass.size() == 0) {
             System.out.println("Danh sách lớp trống, tạo danh sách lớp trước khi thêm mới sinh viên!");
-            return;
-        }
-        System.out.print("Nhập số lượng sinh viên muốn thêm: ");
-        int inputnumber = Integer.parseInt(sc.nextLine());
-        for (int i = 0; i < inputnumber; i++) {
-            Student newStudent = new Student();
-            System.out.println("Sinh viên " + (i + 1) + ":");
-            newStudent.inputData();
-            listStudent.add(newStudent);
-             addstudentClass(newStudent);         //goi ham 143.
+        } else {
+            int inputnumber;
+            while (true) {
+                try {
+                    System.out.print("Nhập số lượng sinh viên muốn thêm: ");
+                     inputnumber = Integer.parseInt(sc.nextLine());
+                    break;
+                } catch (Exception e) {
+                    System.out.println("Sai định dạng, hãy nhập lại.");
+                }
+            }
+            for (int i = 0; i < inputnumber; i++) {
+                Student newStudent = new Student();
+                System.out.println("Sinh viên " + (i + 1) + ":");
+                newStudent.inputData();
+                listStudent.add(newStudent);
+                addstudentClass(newStudent);
+            }
         }
     }
     //--2----------update Student----------
     public static void updateStudent() {
         if (listStudent.size() == 0) {
             System.err.println("Danh sách sinh viên trống, hãy thêm mới trước khi update!");
-        }
-        System.out.print("Nhập Id để cập nhập thông tin: ");
-        String inputIdStudent = sc.nextLine();
-        String newStudentName;
-        for (Student student : listStudent) {
-            if (student.getStudentId().equals(inputIdStudent)) {
-                while (true) {
-                    System.out.print("Nhập tên sinh viên: ");
-                     newStudentName = sc.nextLine();
-                    if (newStudentName.trim().length() > 10 && newStudentName.trim().length() < 50) {
-                        student.setStudentName(newStudentName);
-                        break;
-                    } else {
-                        System.out.println("Tên gồm 10-50 kí tự.");
+        } else {
+            System.out.print("Nhập Id để cập nhập thông tin: ");
+            String inputIdStudent = sc.nextLine();
+            String newStudentName;
+            boolean check = true;
+            for (Student student : listStudent) {
+                if (student.getStudentId().equals(inputIdStudent)) {
+                    while (true) {
+                        System.out.print("Nhập tên sinh viên: ");
+                        newStudentName = sc.nextLine();
+                        if (newStudentName.trim().length() > 10 && newStudentName.trim().length() < 50) {
+                            student.setStudentName(newStudentName);
+                            break;
+                        } else {
+                            System.out.println("Tên gồm 10-50 kí tự.");
+                        }
                     }
+                    System.out.print("Nhập tuổi sinh viên: ");
+                    student.setAge(Student.inputAge(sc));
+                    System.out.print("Nhập giới tính sinh viên: ");
+                    student.setSex(Boolean.parseBoolean(sc.nextLine()));
+                    System.out.println();
+                    System.out.print("Trạng thái của sinh viên: ");
+                    student.setStudentStatus(Boolean.parseBoolean(sc.nextLine()));
+                    System.out.print("Chọn lớp sinh viên: ");
+                    addstudentClass(student);
+                    System.out.println("Cập nhập thành công.");
+                } else {
+                    check = false;
                 }
-                System.out.print("Nhập tuổi sinh viên: ");
-                student.setAge(Student.inputAge(sc));
-                System.out.print("Nhập giới tính sinh viên: ");
-                student.setSex(Boolean.parseBoolean(sc.nextLine()));
-                System.out.print("Trạng thái của sinh viên: ");
-                student.setStudentStatus(Boolean.parseBoolean(sc.nextLine()));
-                System.out.print("Chọn lớp sinh viên: ");
-                addstudentClass(student);//goi ham 143.
-                System.out.println("Cập nhập thành công.");
+            }
+            if (!check) {
+                System.out.println("Mã Id không tồn tại.");
             }
         }
+
     }
+//-------------------update diem cho sinh vien----------------------------
+public static void updateStudentMark(List<Float> listMark, Scanner sc, Student student, String subject) {
+    System.out.printf("Cap nhat diem %s cho sinh vien: \n", subject);
+    System.out.println("1. Nhập thêm điểm cho sinh viên");
+    System.out.println("2. Thêm mới điểm cho sinh viên");
+    System.out.println("3. Cập nhập điểm của 1 môn");
+    System.out.println("4. Không cập cập");
+    System.out.print("Lựa chọn của bạn là: ");
+    int choice = Integer.parseInt(sc.nextLine());
+    switch (choice){
+        case 1:
+            Student student1=new Student();
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+        case 4: break;
+        default:
+            System.out.println("vui lòng chọn trong khoảng 1-4.");
+
+    }
+
+    }
+
     //---3-------------Show list student----------------------
     public static void showListStudent() {
-        System.out.println("+-------------------------------------------------------------------------------------------------------------+");
-        System.out.printf("%-15s%-20s%-10s%-10s%-10s%-20s%-10s%-10s\n", "| Mã sinh viên ", "|    Tên sinh viên", "|   Tuổi", "| Giới tính ","| Lớp học ", "|   Điểm trung bình", "| Học lực", "| Trạng thái |");
-        System.out.println("+-------------------------------------------------------------------------------------------------------------+");
-        for (Student student : listStudent) {
-            student.displayData();
-        }
+
+            System.out.println("+-------------------------------------------------------------------------------------------------------------+");
+            System.out.printf("%-15s%-20s%-10s%-10s%-10s%-20s%-10s%-10s\n", "| Mã sinh viên ", "|    Tên sinh viên", "|   Tuổi", "| Giới tính ", "| Lớp học ", "|   Điểm trung bình", "| Học lực", "| Trạng thái |");
+            System.out.println("+-------------------------------------------------------------------------------------------------------------+");
+            for (Student student : listStudent) {
+                student.displayData();
+            }
 
     }
-
     //----4---- avgMark---------------------
     public static void avgMarkStudent() {
-        for (Student student : listStudent) {
-            student.calAvgMark();
+        if (listStudent.size() == 0) {
+            System.err.println("Danh sách sinh viên trống, hãy thêm mới trước khi tính điểm!");
+        } else {
+            for (Student student : listStudent) {
+                student.calAvgMark();
+            }
+            System.out.println("Đã tính xong điểm trung bình.");
         }
     }
 
     //-----5------GPA- student----------
     public static void gpaStudent() {
-        for (Student student : listStudent) {
-            student.getGpaStudent();
+        if (listStudent.size() == 0) {
+            System.err.println("Danh sách sinh viên trống, hãy thêm mới trước khi sắp xếp!");
+        } else {
+            for (Student student : listStudent) {
+                student.getGpaStudent();
+            }
+            System.out.println("Đã sắp xếp xong học lực.");
         }
     }
 
     //-----6--- sort avg student---------
     public static void sortAvgStudent() {
-        Collections.sort(listStudent, new Comparator<Student>() {
-            @Override
-            public int compare(Student o1, Student o2) {
-                if (o1.getAvgMark() > o2.getAvgMark()) {
-                    return 1;
-                } else if (o1.getAvgMark() == o2.getAvgMark()) {
-                    return 0;
-                } else {
-                    return -1;
+        if (listStudent.size() == 0) {
+            System.err.println("Danh sách sinh viên trống, hãy thêm mới trước khi sắp xếp!");
+        } else {
+            Collections.sort(listStudent, new Comparator<Student>() {
+                @Override
+                public int compare(Student o1, Student o2) {
+                    if (o1.getAvgMark() > o2.getAvgMark()) {
+                        return 1;
+                    } else if (o1.getAvgMark() == o2.getAvgMark()) {
+                        return 0;
+                    } else {
+                        return -1;
+                    }
                 }
-            }
-        });
+            });
+            System.out.println("Đã sắp xếp theo thứ tự điểm trung bình tăng dần.");
+        }
     }
-
     //----7--------search student----------
     public static void searchStudent() {
         System.out.println("Nhập tên sinh viên muốn tìm kiếm");
         String searchName = sc.nextLine();
         System.out.println("+-------------------------------------------------------------------------------------------------------------+");
-        System.out.printf("%-15s%-20s%-10s%-10s%-10s%-20s%-10s%-10s\n", "| Mã sinh viên ", "|    Tên sinh viên", "|   Tuổi", "| Giới tính ","| Lớp học ", "|   Điểm trung bình", "| Học lực", "| Trạng thái |");
+        System.out.printf("%-15s%-20s%-10s%-10s%-10s%-20s%-10s%-10s\n", "| Mã sinh viên ", "|    Tên sinh viên", "|   Tuổi", "| Giới tính ", "| Lớp học ", "|   Điểm trung bình", "| Học lực", "| Trạng thái |");
         System.out.println("+-------------------------------------------------------------------------------------------------------------+");
+        boolean check = true;
         for (Student sstudent : listStudent) {
             if (sstudent.getStudentName().contains(searchName)) {
                 sstudent.displayData();
+            } else {
+                check = false;
             }
+        }
+        if (!check) {
+            System.out.println("Không tồn tại sinh viên tên" + searchName);
         }
 
     }
@@ -142,43 +204,41 @@ public class StudendMethod implements Comparator<Student> {
     public static void showListPass() {
         int count = 0;
         System.out.println("+-------------------------------------------------------------------------------------------------------------+");
-        System.out.printf("%-15s%-20s%-10s%-10s%-10s%-20s%-10s%-10s\n", "| Mã sinh viên ", "|    Tên sinh viên", "|   Tuổi", "| Giới tính ","| Lớp học ", "|   Điểm trung bình", "| Học lực", "| Trạng thái |");
+        System.out.printf("%-15s%-20s%-10s%-10s%-10s%-20s%-10s%-10s\n", "| Mã sinh viên ", "|    Tên sinh viên", "|   Tuổi", "| Giới tính ", "| Lớp học ", "|   Điểm trung bình", "| Học lực", "| Trạng thái |");
         System.out.println("+-------------------------------------------------------------------------------------------------------------+");
         for (Student sstudent : listStudent) {
-                if (sstudent.getAvgMark()>5){
-                    sstudent.displayData();
-                    count++;
-                }
+            if (sstudent.getAvgMark() > Student.MARK_PASS) {
+                sstudent.displayData();
+                count++;
+            }
         }
-        System.out.printf("Có %d học sinh đã đỗ.",count);
+        System.out.printf("Có %d học sinh đã đỗ.", count);
     }
-//-------------add class for student----------------------
-public static void addstudentClass( Student newStudent) {
-    int count=1;
-    System.out.printf("Hiện tại đang có %d lớp:\n", ClassStudentMethod.listStudsentClass.size());
-    for (StudentClass student : ClassStudentMethod.listStudsentClass) {
-        System.out.printf("%-10d%-20s\n", count++, student.getClassName());
-        ;
-    }
-    System.out.print("Nhập tên lớp muốn thêm : ");
-    String inputNameClass = sc.nextLine();
-    boolean run = true;
-    while (run) {
-        for (StudentClass student : ClassStudentMethod.listStudsentClass) {
-            if (student.getClassName().equals(inputNameClass) ) {
-                newStudent.setStudentClass(student);
-                System.out.println("Thêm thành công.");
-                return;
-            } else {
-                System.err.print("Nhập sai, hãy nhập lại: ");
-                inputNameClass = sc.nextLine();
 
+    //-------------add class for student----------------------
+    public static void addstudentClass(Student newStudent) {
+        int count = 1;
+        System.out.printf("Hiện tại đang có %d lớp:\n", ClassStudentMethod.listStudsentClass.size());
+        for (StudentClass student : ClassStudentMethod.listStudsentClass) {
+            System.out.printf("%-10d%-20s\n", count++, student.getClassName());
+            ;
+        }
+        System.out.print("Nhập tên lớp muốn thêm : ");
+        String inputNameClass = sc.nextLine();
+        boolean run = true;
+        while (run) {
+            for (StudentClass student : ClassStudentMethod.listStudsentClass) {
+                if (student.getClassName().equals(inputNameClass)) {
+                    newStudent.setStudentClass(student);
+                    System.out.println("Thêm thành công.");
+                    return;
+                } else {
+                    System.err.print("Nhập sai, hãy nhập lại: ");
+                    inputNameClass = sc.nextLine();
+                }
             }
         }
     }
-
-}
-
 
     @Override
     public int compare(Student o1, Student o2) {

@@ -17,9 +17,17 @@ public class ClassStudentMethod {
 
     //---------them moi lop hoc------------------
     public static void addNewClass() {
-        System.out.print("Nhập số lượng lớp muốn thêm mới: ");
-        int inputnumber = Integer.parseInt(sc.nextLine());
-        for (int i = 0; i < inputnumber; i++) {
+        int choice ;
+        while (true) {
+            try {
+                System.out.print("Nhập số lượng lớp muốn thêm mới: ");
+                choice = Integer.parseInt(sc.nextLine());
+                break;
+            } catch (Exception e) {
+                System.out.println("Sai định dạng, hãy nhập lại.");
+            }
+        }
+        for (int i = 0; i < choice; i++) {
             System.out.printf("Lớp học thứ: %d\n", (i + 1));
             StudentClass studentClass = new StudentClass();
             studentClass.inputData();
@@ -34,21 +42,22 @@ public class ClassStudentMethod {
         String inputId = sc.nextLine();
         for (StudentClass x : listStudsentClass) {
             if (x.getClassId().equals(inputId)) {
-                System.out.print("Nhập tên lớp: ");
-                String  className= sc.nextLine();
-                boolean checkout=true;
-                while (checkout) {
-                    for (StudentClass xclass : ClassStudentMethod.listStudsentClass) {
-                        if (xclass.getClassName().equals(className.trim()) || className.trim().length() == 0 || className.trim().length() > 10) {
-                            System.out.print("Độ dài tên <10 và không được trùng hoặc trống, nhập lại: ");
-                            className = sc.nextLine();
-                            break;
-                        } else {
-                            checkout = false;
-                        }
+                    System.out.print("Nhập tên lớp: ");
+                    String  className= sc.nextLine();
+                    if (className!=""&&className.trim().length()!=0){
+                        boolean checkout=true;
+                        while (checkout) {
+                            for (StudentClass xclass : ClassStudentMethod.listStudsentClass) {
+                                if (xclass.getClassName().equals(className.trim()) || className.trim().length() == 0 || className.trim().length() > 10) {
+                                    System.out.print("Độ dài tên <10 và không được trùng hoặc trống, nhập lại: ");
+                                    className = sc.nextLine();
+                                    break;
+                                } else {
+                                    checkout = false;
+                                }
+                            }
+                        } x.setClassName(className);
                     }
-                }
-                x.setClassName(className);
                 System.out.print("Mô tả: ");
                 x.setDescriptions(sc.nextLine());
                 System.out.println("Trạng thái lớp:");
@@ -97,7 +106,7 @@ public class ClassStudentMethod {
         System.out.printf("Có %d lớp đang hoạt động.\n",count);
     }
 
-    //--------tim kiem lop hoc theo ten----------------------
+    //--------tim kiem lop hoc theo ten------------------
     public static void searchClass() {
         System.out.println("Nhập tên class cần tìm: ");
         String inputName = sc.nextLine();
