@@ -32,8 +32,8 @@ public class ClassStudentMethod {
             StudentClass studentClass = new StudentClass();
             studentClass.inputData();
             listStudsentClass.add(studentClass);
+            System.out.println("Thêm thành công");
         }
-
     }
 
     //--------- Cap nhap thong tin lop hoc---------------
@@ -64,15 +64,7 @@ public class ClassStudentMethod {
                 System.out.println("1. Sắp bắt đầu.");
                 System.out.println("2. Hoạt động.");
                 System.out.println("3. Tạm dừng.");
-                int newClassStatus=0;
-                while (newClassStatus<1||newClassStatus >3) {
-                    try {
-                        System.out.print("Vui lòng chọn trong khoảng 1 - 3: ");
-                        newClassStatus= Integer.parseInt(sc.nextLine());
-                    } catch (Exception e) {
-                        System.out.println("Sai định dạng, hãy nhập lại");
-                    }
-                }
+                int newClassStatus=StudentManagement.checkChoice(1,3);
                 x.setClassStatus(newClassStatus);
             }
         }

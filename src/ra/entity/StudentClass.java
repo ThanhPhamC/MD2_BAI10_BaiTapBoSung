@@ -113,14 +113,7 @@ public class StudentClass implements IStudentManagement {
         System.out.println("1. Sắp bắt đầu.");
         System.out.println("2. Hoạt động.");
         System.out.println("3. Tạm dừng.");
-        while (this.classStatus < 1 || this.classStatus > 3) {
-            try {
-                System.out.print("Vui lòng chọn trong khoảng 1 - 3: ");
-                this.classStatus = Integer.parseInt(sc.nextLine());
-            } catch (Exception e) {
-                System.out.println("Sai định dạng, hãy nhập lại");
-            }
-        }
+        this.classStatus=StudentManagement.checkChoice(1,3);
     }
 
     @Override

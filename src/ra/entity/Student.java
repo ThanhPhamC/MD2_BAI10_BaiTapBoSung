@@ -286,20 +286,19 @@ public class Student implements IStudentManagement {
             System.out.println("+-------------------------------------------------------------------------------------------------------------+");
             System.out.print("Điểm JavaScript: ");
             for (Float jsmark : listMarkJavaScript) {
-                System.out.printf("%s\t", jsmark);
+                System.out.print(jsmark+", ");
             }
-            System.out.printf("\n");
-
+            System.out.println("");
             System.out.print("Điểm JavaCore  : ");
             for (Float jcmark : listMarkJavaCore) {
-                System.out.printf("%s\t" + jcmark);
+                System.out.print(jcmark+", ");
             }
-            System.out.printf("\n");
+            System.out.println("");
             System.out.print("Điểm JavaWeb   : ");
             for (Float jwmark : listMarkJavaWeb) {
-                System.out.printf("%s\t", jwmark);
+                System.out.print(jwmark+", ");
             }
-            System.out.printf("\n");
+            System.out.println("");
         } else {
             System.out.printf("|    %-10s|  %-17s|   %-6s|    Nam    |  %-7s|       %-12s|  %-7s|  %-8s  |\n",
                     studentId, studentName, age, studentClass.getClassName(), avgMark, gPA, studentStatus);

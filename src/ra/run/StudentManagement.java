@@ -23,15 +23,7 @@ public class StudentManagement {
             System.out.println("|                    3. Thoát.                             |");
             System.out.println("+----------------------------------------------------------+\n");
 
-            int choice=0;
-            while (choice<1||choice>3) {
-                try {
-                    System.out.print("Chọn từ \"1- 3\" để tiếp tục: ");
-                     choice = Integer.parseInt(sc.nextLine());
-                } catch (Exception e) {
-                    System.out.println("Sai định dạng, hãy nhập lại.");
-                }
-            }
+            int choice=checkChoice(1,3);
             switch (choice) {
                 case 1:
                    classManagement();
@@ -63,15 +55,8 @@ public class StudentManagement {
             System.out.println("|  6. Thoát.                                               |");
             System.out.println("+----------------------------------------------------------+\n");
 
-            int choice = 0;
-            while (choice<1||choice>6) {
-                try {
-                    System.out.print("Chọn từ \"1- 6\" để tiếp tục: ");
-                    choice = Integer.parseInt(sc.nextLine());
-                } catch (Exception e) {
-                    System.out.println("Sai định dạng, hãy nhập lại.");
-                }
-            }
+            int choice = checkChoice(1,6);
+
             switch (choice) {
                 case 1:
                     ClassStudentMethod.addNewClass();
@@ -121,15 +106,8 @@ public class StudentManagement {
             System.out.println("|   10.Thoát.                                              |");
             System.out.println("+----------------------------------------------------------+\n");
 
-            int choice = 0;
-            while (choice<1||choice>10) {
-                try {
-                    System.out.println("Chọn từ \"1- 10\" để tiếp tục: ");
-                    choice = Integer.parseInt(sc.nextLine());
-                } catch (Exception e) {
-                    System.err.println("Sai định dạng, hãy nhập lại.");
-                }
-            }
+            int choice = checkChoice(1,10);
+
             switch (choice) {
                 case 1:
                     StudendMethod.addNewStudent();
@@ -165,6 +143,19 @@ public class StudentManagement {
         } while (outCase);
 
     }
+    public static int checkChoice(int a, int b){
+        int choice = 0;
+        while (choice<a||choice>b) {
+            try {
+                System.out.printf("Chọn từ \"%d- %d\" để tiếp tục:\n ",a,b);
+                choice = Integer.parseInt(sc.nextLine());
+            } catch (Exception e) {
+                System.err.println("Nhập sai hãy hãy nhập lại.");
+            }
+        }
+        return choice;
+    }
+
 }
 
 

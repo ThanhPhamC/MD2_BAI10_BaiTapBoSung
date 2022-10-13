@@ -8,7 +8,6 @@ import java.util.*;
 public class StudendMethod implements Comparator<Student> {
     public static ArrayList<Student> listStudent = new ArrayList<>();
     static Scanner sc = new Scanner(System.in);
-
     public static void main(String[] args) {
     }
 
@@ -21,7 +20,7 @@ public class StudendMethod implements Comparator<Student> {
             while (true) {
                 try {
                     System.out.print("Nhập số lượng sinh viên muốn thêm: ");
-                     inputnumber = Integer.parseInt(sc.nextLine());
+                    inputnumber = Integer.parseInt(sc.nextLine());
                     break;
                 } catch (Exception e) {
                     System.out.println("Sai định dạng, hãy nhập lại.");
@@ -61,11 +60,37 @@ public class StudendMethod implements Comparator<Student> {
                     student.setAge(Student.inputAge(sc));
                     System.out.print("Nhập giới tính sinh viên: ");
                     student.setSex(Boolean.parseBoolean(sc.nextLine()));
-                    System.out.println();
                     System.out.print("Trạng thái của sinh viên: ");
                     student.setStudentStatus(Boolean.parseBoolean(sc.nextLine()));
                     System.out.print("Chọn lớp sinh viên: ");
                     addstudentClass(student);
+                    boolean checkUpdateMark = true;
+                    do {
+                        System.out.println("+--------------------------------------+");
+                        System.out.println("|    Chọn môn học bạn muốn cập nhập.   | ");
+                        System.out.println("+--------------------------------------+");
+                        System.out.println("|         1. Java Script.              |");
+                        System.out.println("+--------------------------------------+");
+                        System.out.println("|         2. Java Core.                |");
+                        System.out.println("+--------------------------------------+");
+                        System.out.println("|         3. Java Web.                 |");
+                        System.out.println("+--------------------------------------+");
+                        System.out.println("|         4. Thoát.                    |");
+                        System.out.println("+--------------------------------------+\n");
+                        System.out.println("Lựa chọn của bạn là : ");
+                        int choice=StudentManagement.checkChoice(1,4);
+                        switch (choice){
+                            case 1: updateStudentMark(student.getListMarkJavaScript(),sc,student,"Java Script");
+                                break;
+                            case 2: updateStudentMark(student.getListMarkJavaCore(),sc,student,"Java Core");
+                                break;
+                            case 3: updateStudentMark(student.getListMarkJavaWeb(),sc,student,"Java Web");
+                                break;
+                            case 4:
+                                checkUpdateMark = false;
+                                break;
+                        }
+                    }while (checkUpdateMark);
                     System.out.println("Cập nhập thành công.");
                 } else {
                     check = false;
@@ -77,42 +102,72 @@ public class StudendMethod implements Comparator<Student> {
         }
 
     }
-//-------------------update diem cho sinh vien----------------------------
-public static void updateStudentMark(List<Float> listMark, Scanner sc, Student student, String subject) {
-    System.out.printf("Cap nhat diem %s cho sinh vien: \n", subject);
-    System.out.println("1. Nhập thêm điểm cho sinh viên");
-    System.out.println("2. Thêm mới điểm cho sinh viên");
-    System.out.println("3. Cập nhập điểm của 1 môn");
-    System.out.println("4. Không cập cập");
-    System.out.print("Lựa chọn của bạn là: ");
-    int choice = Integer.parseInt(sc.nextLine());
-    switch (choice){
-        case 1:
-            Student student1=new Student();
-            break;
-        case 2:
-            break;
-        case 3:
-            break;
-        case 4: break;
-        default:
-            System.out.println("vui lòng chọn trong khoảng 1-4.");
 
-    }
+    //-------------------update diem cho sinh vien----------------------------
+    public static void updateStudentMark(List<Float> listMark, Scanner sc, Student student, String subject) {
+        boolean check = true;
+        do {
+            System.out.printf ("   Cập nhập điểm môn %s cho sinh viên. \n", subject);
+            System.out.println("+--------------------------------------+");
+            System.out.println("|  1. Tạo mới bảng điểm cho sinh viên. |");
+            System.out.println("+--------------------------------------+");
+            System.out.println("|  2. Thêm mới điểm cho sinh viên.     |");
+            System.out.println("+--------------------------------------+");
+            System.out.println("|  3. Không cập cập.                   |");
+            System.out.println("+--------------------------------------+\n");
+            System.out.print  ("Lựa chọn của bạn là: ");
+            int choice = StudentManagement.checkChoice(1,3);
+            switch (choice) {
+                case 1:
+                    ArrayList<Float> newMark = new ArrayList<>();
+                    student.inputMark(newMark, sc);
+                    switch (subject) {
+                        case "Java Script":
+                            student.setListMarkJavaScript(newMark);
+                            break;
+                        case "Java Core":
+                            student.setListMarkJavaCore(newMark);
+                            break;
+                        case "Java Web":
+                            student.setListMarkJavaWeb(newMark);
+                            break;
+                    }
+                    break;
+                case 2:
+                    switch (subject) {
+                        case "Java Script":
+                            Student.inputMark(student.getListMarkJavaScript(), sc);
+                            break;
+                        case "Java Core":
+                            Student.inputMark(student.getListMarkJavaCore(), sc);
+                            break;
+                        case "Java Web":
+                            Student.inputMark(student.getListMarkJavaWeb(), sc);
+                            break;
+                    }
+                    break;
+                case 3:
+                    check=false;
+                    break;
+                default:
+                    System.out.println("vui lòng chọn trong khoảng 1-4.");
+            }
+        }while (check);
 
     }
 
     //---3-------------Show list student----------------------
     public static void showListStudent() {
 
-            System.out.println("+-------------------------------------------------------------------------------------------------------------+");
-            System.out.printf("%-15s%-20s%-10s%-10s%-10s%-20s%-10s%-10s\n", "| Mã sinh viên ", "|    Tên sinh viên", "|   Tuổi", "| Giới tính ", "| Lớp học ", "|   Điểm trung bình", "| Học lực", "| Trạng thái |");
-            System.out.println("+-------------------------------------------------------------------------------------------------------------+");
-            for (Student student : listStudent) {
-                student.displayData();
-            }
+        System.out.println("+-------------------------------------------------------------------------------------------------------------+");
+        System.out.printf("%-15s%-20s%-10s%-10s%-10s%-20s%-10s%-10s\n", "| Mã sinh viên ", "|    Tên sinh viên", "|   Tuổi", "| Giới tính ", "| Lớp học ", "|   Điểm trung bình", "| Học lực", "| Trạng thái |");
+        System.out.println("+-------------------------------------------------------------------------------------------------------------+");
+        for (Student student : listStudent) {
+            student.displayData();
+        }
 
     }
+
     //----4---- avgMark---------------------
     public static void avgMarkStudent() {
         if (listStudent.size() == 0) {
@@ -157,6 +212,7 @@ public static void updateStudentMark(List<Float> listMark, Scanner sc, Student s
             System.out.println("Đã sắp xếp theo thứ tự điểm trung bình tăng dần.");
         }
     }
+
     //----7--------search student----------
     public static void searchStudent() {
         System.out.println("Nhập tên sinh viên muốn tìm kiếm");
